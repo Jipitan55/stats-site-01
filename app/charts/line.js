@@ -9,7 +9,9 @@ import { fmtNum } from '../ui/format.js';
 export function lineChart(container, opts) {
   const { labels, series, unit, decimals, reference, ariaLabel, yLabel, yAxisLabel } = opts;
   const narrow = typeof window !== 'undefined' && window.innerWidth < 560;
-  const W = narrow ? 400 : 720, H = 300, L = 54, R = 14, T = 16, B = 30;
+  // Narrow viewBox (360) keeps axis text at least 11px when the chart
+  // scales to a ~330px card on a 390px phone.
+  const W = narrow ? 360 : 720, H = 300, L = 54, R = 14, T = 16, B = 30;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`, width: '100%', role: 'img',
     'aria-label': ariaLabel || 'Line chart',

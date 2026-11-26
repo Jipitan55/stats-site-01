@@ -17,7 +17,9 @@ export function pyramidChart(container, opts) {
   const xMale = (v) => L + half - (v / maxBand) * half;
   const xFemale = (v) => L + half + C + (v / maxBand) * half;
   const rowH = (H - T - B) / groups.length;
-  const y = (i) => T + i * rowH;
+  // Oldest band at the top, youngest at the bottom, as population
+  // pyramids are conventionally drawn (groups[0] is 0–4).
+  const y = (i) => T + (groups.length - 1 - i) * rowH;
   // Axis ticks (millions). Both sides start at 0.
   [0, 2, 4, 6, 8].forEach((m) => {
     const v = m * 1000;
@@ -68,7 +70,7 @@ export function pyramidChart(container, opts) {
       const f = groups[band] - m;
       const rect = svg.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
-      const cy = rect.top + (T + band * rowH + rowH / 2) * (rect.height / H);
+      const cy = rect.top + (T + (groups.length - 1 - band) * rowH + rowH / 2) * (rect.height / H);
       showTip(`<b>Age ${labels[band]}, ${year}</b><br>Male ${fmtNum(m)}k · Female ${fmtNum(f)}k<br>Total ${fmtNum(groups[band])}k`, cx, cy);
     },
   };

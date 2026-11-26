@@ -20,7 +20,7 @@ export function pyramidBlock(initialYear, opts) {
     title: 'Population pyramid',
     takeaway: opts && opts.takeaway ? opts.takeaway : 'From a pyramid to a column: Japan aged in one lifetime',
     source: PYRAMID[year].total,
-    note: '5-year bands, thousands of people',
+    note: '5-year bands; axis in millions of people',
   });
   const controls = document.createElement('div');
   controls.className = 'pyr-controls';
@@ -29,7 +29,7 @@ export function pyramidBlock(initialYear, opts) {
   function draw() {
     const d = PYRAMID[year];
     card.querySelector('.src').textContent =
-      'Source: ' + (year === 2050 ? 'National Institute of Population and Social Security Research, Population Projections 2023 (medium)' : year === 2024 ? 'Statistics Bureau of Japan, Population Estimates, 1 Oct 2024' : 'Statistics Bureau of Japan, Population Census ' + year) + ' · 5-year bands, thousands of people';
+      'Source: ' + (year === 2050 ? 'National Institute of Population and Social Security Research, Population Projections 2023 (medium)' : year === 2024 ? 'Statistics Bureau of Japan, Population Estimates, 1 Oct 2024' : 'Statistics Bureau of Japan, Population Census ' + year) + ' · 5-year bands; axis in millions of people';
     api = pyramidChart(slot, {
       year, groups: d.groups, maleShare: MALE_SHARE, labels: AGE_LABELS, total: d.total.value,
       height: opts && opts.height ? opts.height : 430,

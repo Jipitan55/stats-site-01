@@ -20,7 +20,11 @@ export const GDP_GROWTH = {
 };
 
 // GDP per capita, current US$, World Bank WDI. South Korea passed Japan in
-// 2023 ($35,674 vs $35,215) and stayed ahead in 2024 and 2025.
+// 2023 ($35,674 vs $35,215) and stayed ahead in 2024 and 2025. Verified
+// 26 Nov 2026 against the WDI API (database last updated 11 Nov 2026):
+// every value below matches the API to the dollar, including Korea 2021 at
+// $37,518 — an earlier review's memory of Japan ahead in 2023 was from an
+// older WDI vintage, not this one.
 export const GDP_PER_CAPITA = {
   years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
   japan: [35665, 40215, 39680, 40645, 41425, 41099, 41581, 35548, 35215, 33797, 35951],

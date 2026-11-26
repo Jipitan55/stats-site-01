@@ -61,9 +61,9 @@ export function renderEconomy(root) {
   // button is filled and Japan's line stays identifiable.
   const cmpCard = chartCard({
     title: 'GDP per capita vs peers, 2015–2025',
-    takeaway: 'South Korea passed Japan in dollars per person',
+    takeaway: 'South Korea passed Japan in 2023 and stayed ahead',
     source: ECONOMY.gdpPerCapita,
-    note: 'Current US$; the weak yen pulls Japan’s dollar figure down',
+    note: 'Current US$ · World Bank WDI; the weak yen pulls Japan’s dollar figure down',
   });
   const cmpControls = document.createElement('div');
   cmpControls.className = 'chart-controls';
@@ -103,12 +103,20 @@ export function renderEconomy(root) {
   charts.appendChild(cmpCard);
   root.appendChild(charts);
 
+  // The rank behind the page title, with its source and year: the IMF's
+  // October 2026 outlook has Japan at $4.45tn in 2025, ahead of India at
+  // $3.91tn, and India passing Japan only in 2027.
+  const rankNote = document.createElement('p');
+  rankNote.className = 'section-note';
+  rankNote.textContent = 'Japan was the world’s fourth-largest economy in 2025 at $4.45 trillion, ahead of India at $3.91 trillion (IMF, World Economic Outlook, October 2026); India is projected to pass Japan in 2027.';
+  root.appendChild(rankNote);
+
   root.appendChild(dataTable({
     title: 'GDP, 2015–2025',
     source: ECONOMY.nominalGdp,
     filename: 'japan-gdp-2015-2025.csv',
     headers: ['Year', 'Nominal GDP (¥ trillion)', 'Real GDP growth (%)'],
-    rows: GDP_GROWTH.years.map((y, i) => [y, GDP_GROWTH.nominal[i], GDP_GROWTH.real[i]]),
+    rows: GDP_GROWTH.years.map((y, i) => [y, fmtNum(GDP_GROWTH.nominal[i], 1), fmtNum(GDP_GROWTH.real[i], 1)]),
     note: 'Calendar year, Cabinet Office SNA',
   }));
 }

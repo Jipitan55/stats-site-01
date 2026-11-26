@@ -1,8 +1,12 @@
 // Government finance data. IMF World Economic Outlook, October 2026 vintage,
 // for the headline ratios and for the debt and balance series. The IMF
-// revised its Japan debt measure in 2026: the October 2026 vintage puts
-// 2024 gross debt at 213.6% of GDP, where the Global Debt Database series
-// used before put it at 236.7% — the two series are not mixed here.
+// changed how it measures Japan's debt in 2026 (face value rather than
+// market value), retiring the old series that read about 258% for 2020:
+// on the new measure 2020 is 228.8%, 2024 is 213.6% and 2025 is 204.8%.
+// The pre-2026 series (Global Debt Database: 236.7% for 2024) is not mixed
+// in here. Verified 26 Nov 2026 against the WEO October 2026 figures as
+// republished by IMF DataMapper and several secondary trackers: 2025
+// gross debt 204.8%, net debt about 132%, fiscal balance −0.7%.
 import { fig } from './sources.js';
 
 export const FINANCE = {

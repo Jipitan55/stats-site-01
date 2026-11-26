@@ -91,7 +91,7 @@ export function renderPrefectures(root) {
         <div><dt>Share aged 65+</dt><dd>${fmtNum(p.aged, 1)}% <span>(${rank('aged')} of 47 — 1 is oldest)</span></dd></div>
         <div><dt>Share of Japan</dt><dd>${fmtNum((100 * p.pop) / 124885, 1)}%</dd></div>
       </dl>
-      <p class="src">Sources: Basic Resident Register, 1 Jan 2024 (population) · Statistics Bureau, Population Estimates 2024 (ageing share)</p>`;
+      <p class="src">Sources: Basic Resident Register, 1 Jan 2024 (total population, including foreign residents) · Statistics Bureau, Population Estimates 2024 (ageing share)</p>`;
     list.innerHTML = '';
     const sorted = [...PREFECTURES].sort(byIndicator);
     sorted.forEach((q, i) => {
@@ -112,6 +112,6 @@ export function renderPrefectures(root) {
     filename: 'japan-prefectures-2024.csv',
     headers: ['Prefecture', 'Population (thousands)', 'Change (%)', 'Aged 65+ (%)'],
     rows: [...PREFECTURES].sort((a, b) => b.pop - a.pop).map((p) => [p.name, p.pop, p.change, p.aged]),
-    note: 'Basic Resident Register, 1 Jan 2024; ageing shares from Population Estimates 2024',
+    note: 'Basic Resident Register, 1 Jan 2024 (total population, including foreign residents); ageing shares from Population Estimates 2024',
   }));
 }

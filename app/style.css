@@ -161,20 +161,20 @@ a:hover { color: var(--vermilion); }
 
 /* Charts (SVG) */
 svg text { font-family: inherit; }
-.axis { font-size: 12.5px; fill: var(--muted); }
-.axis.strong { font-weight: 700; fill: var(--ink); font-size: 13px; }
-.pyr-label { font-size: 12.5px; }
+.axis { font-size: 13px; fill: var(--muted); }
+.axis.strong { font-weight: 700; fill: var(--ink); font-size: 13.5px; }
+.pyr-label { font-size: 13px; }
 .grid { stroke: #e4dfd2; stroke-width: 1; }
 .axis-line { stroke: #b9b3a6; stroke-width: 1.2; }
 .bar { opacity: 0.92; }
 .bar.hi { fill: var(--vermilion) !important; }
 .dot { cursor: pointer; }
 .refline { stroke: var(--vermilion); stroke-width: 1.6; stroke-dasharray: 6 4; }
-.reflabel { font-size: 12.5px; fill: var(--vermilion); font-weight: 700; }
+.reflabel { font-size: 13px; fill: var(--vermilion); font-weight: 700; }
 .pyr-m { fill: var(--indigo); }
 .pyr-f { fill: var(--indigo-3); }
 .tile { cursor: pointer; }
-.tile-name { font-size: 10.5px; font-weight: 700; }
+.tile-name { font-size: 9.5px; font-weight: 700; }
 .tile-val { font-size: 10px; }
 .chart-tip {
   position: fixed; z-index: 100; display: none; max-width: 260px;
@@ -245,6 +245,10 @@ tbody tr:hover { background: var(--indigo-pale); }
 }
 @media (max-width: 560px) {
   body { font-size: 16px; }
+  /* Wrap the nav instead of scrolling it: every section link stays
+     visible, nothing is cut off at the edges. */
+  .main-nav { flex-wrap: wrap; overflow-x: visible; }
+  .main-nav a { padding: 6px 10px 8px; }
   .tile-grid { grid-template-columns: 1fr; }
   .kpis { grid-template-columns: 1fr 1fr; }
   .kpi-v { font-size: 28px; }

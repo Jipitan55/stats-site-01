@@ -1,8 +1,9 @@
 // Number formatting: one consistent style across the whole site.
 export function fmtNum(v, decimals) {
-  // Coerce -0 and float dust to 0, so a value never prints as "-0.0".
-  const n = (v === 0 || Math.abs(v) < 5e-7) ? 0 : v;
-  const d = decimals === undefined ? (Number.isInteger(n) ? 0 : 1) : decimals;
+  const d = decimals === undefined ? (Number.isInteger(v) ? 0 : 1) : decimals;
+  // Coerce -0, float dust, and anything that rounds to zero at this
+  // precision (e.g. -0.04 at 1 decimal) to 0, so a value never prints as "-0.0".
+  const n = Number(v.toFixed(d)) === 0 ? 0 : v;
   return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
 }
 

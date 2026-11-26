@@ -31,8 +31,11 @@ export function tileMap(container, opts) {
   };
   const textColor = (v, id) => {
     if (indicator.id === 'change') return v >= 0 ? '#fff' : '#2e1a12';
+    // White text from the fourth shade up (#8a83c9 and darker): dark ink on
+    // mid-indigo is hard to read, and white reads better there.
     const t = hi === lo ? 0.5 : (v - lo) / (hi - lo);
-    return t > 0.6 ? '#fff' : INK;
+    const idx = Math.min(SCALE.length - 1, Math.floor(t * SCALE.length));
+    return idx >= 3 ? '#fff' : INK;
   };
   for (const p of prefectures) {
     const x = GAP + p.col * (TW + GAP), y = GAP + p.row * (TH + GAP);

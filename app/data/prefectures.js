@@ -1,8 +1,10 @@
 // Prefecture data. Population: Basic Resident Register, 1 January 2024
-// (thousands, rounded). Change: year-on-year % (only Tokyo and Saitama
-// grew in 2024). Ageing share: share aged 65+, Statistics Bureau
-// Population Estimates 2024, rounded to 0.1pp. Tile positions (row, col)
-// place each prefecture on a grid that reads as the shape of Japan.
+// (thousands, rounded) — total population, including foreign residents.
+// Change: year-on-year % (only Tokyo and Saitama grew in 2024; for
+// Japanese nationals only, Tokyo alone grew). Ageing share: share aged 65+,
+// Statistics Bureau Population Estimates 2024, rounded to 0.1pp. Tile
+// positions (row, col) place each prefecture on a grid that reads as the
+// shape of Japan.
 export const PREFECTURES = [
   { id: 'hokkaido', name: 'Hokkaido', row: 0, col: 10, pop: 5094, change: -0.9, aged: 32.6 },
   { id: 'aomori', name: 'Aomori', row: 1, col: 10, pop: 1184, change: -1.7, aged: 34.4 },
@@ -59,4 +61,4 @@ export const PREF_INDICATORS = [
   { id: 'pop', label: 'Population', unit: 'thousand', decimals: 0, higherIs: 'high', note: 'Resident population, 1 Jan 2024' },
 ];
 
-export const PREF_SOURCE = { period: '1 Jan 2024', source: 'brr', note: 'Basic Resident Register; ageing shares from Statistics Bureau Population Estimates 2024' };
+export const PREF_SOURCE = { period: '1 Jan 2024', source: 'brr', note: 'Basic Resident Register — total population, including foreign residents; ageing shares from Statistics Bureau Population Estimates 2024' };

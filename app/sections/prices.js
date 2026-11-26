@@ -17,7 +17,7 @@ export function renderPrices(root) {
 
   const cpiCard = chartCard({
     title: 'Consumer price inflation, 2015–2025',
-    takeaway: 'Inflation stayed above the 2% target for a fourth straight year',
+    takeaway: 'Headline CPI rose 3.2% in 2025; core 3.1%, core-core 3.0%',
     source: PRICES.headline,
     note: 'Consumer Price Index, 2020 base, annual average',
   });
@@ -60,7 +60,7 @@ export function renderPrices(root) {
     source: PRICES.headline,
     filename: 'japan-cpi-2015-2025.csv',
     headers: ['Year', 'All items (%)', 'Core — less fresh food (%)', 'Core-core — less food & energy (%)'],
-    rows: CPI.years.map((y, i) => [y, CPI.headline[i], CPI.core[i], CPI.coreCore[i]]),
+    rows: CPI.years.map((y, i) => [y, fmtNum(CPI.headline[i], 1), fmtNum(CPI.core[i], 1), fmtNum(CPI.coreCore[i], 1)]),
     note: 'Year-on-year %, annual average, 2020 base',
   }));
 }

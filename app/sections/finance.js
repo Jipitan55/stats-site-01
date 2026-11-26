@@ -41,7 +41,7 @@ export function renderFinance(root) {
 
   const note = document.createElement('p');
   note.className = 'section-note';
-  note.textContent = 'Japan’s fiscal year runs April to March, so budget figures are labelled FY; the ratios above are calendar-year, % of GDP. Gross debt counts everything the government owes; net debt subtracts the financial assets it holds, which is why the two differ by more than 70 points.';
+  note.textContent = 'Japan’s fiscal year runs April to March, so budget figures are labelled FY; the ratios above are calendar-year, % of GDP. Gross debt counts everything the government owes; net debt subtracts the financial assets it holds, which is why the two differ by more than 70 points. The IMF changed how it measures Japan’s debt in 2026 (face value rather than market value), retiring the old series that read about 258% for 2020 — on the current measure 2020 was 228.8% and 2025 is 204.8%, all from the World Economic Outlook, October 2026.';
   root.appendChild(note);
 
   root.appendChild(dataTable({

@@ -4,7 +4,10 @@ import { fmtNum } from '../ui/format.js';
 
 export function barChart(container, opts) {
   const { labels, series, unit, decimals, color, highlight, ariaLabel } = opts;
-  const W = 720, H = 300, L = 54, R = 12, T = 14, B = 30;
+  const narrow = typeof window !== 'undefined' && window.innerWidth < 560;
+  // Narrow viewBox (360) keeps axis text at least 11px when the chart
+  // scales to a ~330px card on a 390px phone.
+  const W = narrow ? 360 : 720, H = 300, L = 54, R = 12, T = 14, B = 30;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`, width: '100%', role: 'img',
     'aria-label': ariaLabel || 'Bar chart',
@@ -37,6 +40,8 @@ export function barChart(container, opts) {
       }, svg);
       bindTip(rect, `<b>${lab}</b><br>${s.name}: ${fmtNum(v, decimals)} ${unit}`);
     });
+    // On a narrow chart, label every other bar so long labels do not collide.
+    if (narrow && i % 2 === 1) return;
     textEl(svg, cx, H - 8, String(lab), { class: 'axis', 'text-anchor': 'middle' });
   });
   return svg;
