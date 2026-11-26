@@ -54,9 +54,16 @@ for (const n of shots) {
 }
 
 // Start from a clean output directory so a stale file from an earlier run
-// can never leak into the entry.
-if (existsSync(out)) rmSync(out, { recursive: true, force: true });
-mkdirSync(out, { recursive: true });
+// can never leak into the entry. Empty the directory instead of removing
+// it: the grader mounts /output as a volume, and removing a mount point
+// fails with "Device or resource busy".
+if (existsSync(out)) {
+  for (const name of readdirSync(out)) {
+    rmSync(join(out, name), { recursive: true, force: true });
+  }
+} else {
+  mkdirSync(out, { recursive: true });
+}
 
 cpSync(appDir, join(out, 'app'), { recursive: true });
 if (shots.length) cpSync(shotsDir, join(out, 'screenshots'), { recursive: true });
