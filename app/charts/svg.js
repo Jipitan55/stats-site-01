@@ -23,7 +23,11 @@ export function ticks(min, max, count) {
   const nice = err <= 0.15 ? 10 : err <= 0.35 ? 5 : err <= 0.75 ? 2 : 1;
   const s = step * nice;
   const out = [];
-  for (let v = Math.ceil(min / s) * s; v <= max + 1e-9; v += s) out.push(v);
+  for (let v = Math.ceil(min / s) * s; v <= max + 1e-9; v += s) {
+    // Round off float dust and coerce -0 to 0, so a tick never prints "-0.0".
+    const r = Math.round(v * 1e9) / 1e9;
+    out.push(r === 0 ? 0 : r);
+  }
   return out;
 }
 

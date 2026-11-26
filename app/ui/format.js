@@ -1,7 +1,9 @@
 // Number formatting: one consistent style across the whole site.
 export function fmtNum(v, decimals) {
-  const d = decimals === undefined ? (Number.isInteger(v) ? 0 : 1) : decimals;
-  return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  // Coerce -0 and float dust to 0, so a value never prints as "-0.0".
+  const n = (v === 0 || Math.abs(v) < 5e-7) ? 0 : v;
+  const d = decimals === undefined ? (Number.isInteger(n) ? 0 : 1) : decimals;
+  return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
 }
 
 export function fmtSigned(v, decimals) {
@@ -22,7 +24,7 @@ export function figText(f) {
 
 export function sourceLine(f, extra) {
   const s = window.__SOURCES[f.source];
-  const bits = ['Source: ' + (s ? s.publisher : f.source), f.period];
+  const bits = ['Source: ' + (s ? (s.short || s.publisher) : f.source), f.period];
   if (extra) bits.push(extra);
   return bits.join(' · ');
 }

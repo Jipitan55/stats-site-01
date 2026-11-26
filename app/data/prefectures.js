@@ -35,7 +35,7 @@ export const PREFECTURES = [
   { id: 'osaka', name: 'Osaka', row: 8, col: 5, pop: 8776, change: -0.2, aged: 28.5 },
   { id: 'nara', name: 'Nara', row: 8, col: 6, pop: 1305, change: -0.8, aged: 31.0 },
   { id: 'mie', name: 'Mie', row: 8, col: 7, pop: 1724, change: -0.7, aged: 29.7 },
-  { id: 'wakayama', name: 'Wakayama', row: 9, col: 6, pop: 913, change: -1.1, aged: 34.8 },
+  { id: 'wakayama', name: 'Wakayama', row: 9, col: 7, pop: 913, change: -1.1, aged: 34.8 },
   { id: 'shimane', name: 'Shimane', row: 9, col: 2, pop: 651, change: -1.0, aged: 35.9 },
   { id: 'hiroshima', name: 'Hiroshima', row: 9, col: 3, pop: 2770, change: -0.6, aged: 30.2 },
   { id: 'kagawa', name: 'Kagawa', row: 9, col: 5, pop: 949, change: -0.8, aged: 31.0 },

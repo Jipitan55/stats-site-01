@@ -7,6 +7,13 @@ import { dataTable } from './helpers.js';
 import { fmtNum } from '../ui/format.js';
 import { sourceLine } from '../ui/format.js';
 
+// The map card heading follows the active tab (the default tab is Growth).
+const MAP_TITLES = {
+  change: 'Only two prefectures grew in 2024',
+  aged: 'Ageing by prefecture, 2024',
+  pop: 'Population by prefecture, 1 Jan 2024',
+};
+
 export function renderPrefectures(root) {
   const wrap = document.createElement('div');
   wrap.className = 'pref-wrap';
@@ -14,7 +21,7 @@ export function renderPrefectures(root) {
   const mapCard = document.createElement('article');
   mapCard.className = 'card pref-map-card';
   const h = document.createElement('h3');
-  h.textContent = 'Only two prefectures grew in 2024';
+  h.textContent = MAP_TITLES.change;
   mapCard.appendChild(h);
   const controls = document.createElement('div');
   controls.className = 'chart-controls';
@@ -52,7 +59,15 @@ export function renderPrefectures(root) {
   let indicator = PREF_INDICATORS[0];
   let selectedId = 'akita';
 
+  // Ranked highest first; exact ties break alphabetically so the order is
+  // stable and checkable.
+  const byIndicator = (a, b) => {
+    const d = b[indicator.id] - a[indicator.id];
+    return d !== 0 ? d : a.name.localeCompare(b.name);
+  };
+
   function draw() {
+    h.textContent = MAP_TITLES[indicator.id] || MAP_TITLES.change;
     segmented(controls, PREF_INDICATORS.map((i) => ({ value: i.id, label: i.label })), indicator.id,
       (v) => { indicator = PREF_INDICATORS.find((i) => i.id === v); draw(); }, 'Map indicator');
     tileMap(mapSlot, { prefectures: PREFECTURES, indicator, selectedId, onSelect: (id) => { selectedId = id; draw(); } });
@@ -63,7 +78,10 @@ export function renderPrefectures(root) {
         : 'Darker indigo = larger population · Tokyo holds 13.9 million, Tottori 540,000';
     const p = PREFECTURES.find((x) => x.id === selectedId);
     const rank = (key) => {
-      const sorted = [...PREFECTURES].sort((a, b) => b[key] - a[key]);
+      const sorted = [...PREFECTURES].sort((a, b) => {
+        const d = b[key] - a[key];
+        return d !== 0 ? d : a.name.localeCompare(b.name);
+      });
       return sorted.findIndex((x) => x.id === p.id) + 1;
     };
     detail.innerHTML = `<h3>${p.name}</h3>
@@ -73,20 +91,17 @@ export function renderPrefectures(root) {
         <div><dt>Share aged 65+</dt><dd>${fmtNum(p.aged, 1)}% <span>(${rank('aged')} of 47 — 1 is oldest)</span></dd></div>
         <div><dt>Share of Japan</dt><dd>${fmtNum((100 * p.pop) / 124885, 1)}%</dd></div>
       </dl>
-      <p class="src">Source: Ministry of Internal Affairs and Communications, Basic Resident Register, 1 Jan 2024</p>`;
+      <p class="src">Sources: Basic Resident Register, 1 Jan 2024 (population) · Statistics Bureau, Population Estimates 2024 (ageing share)</p>`;
     list.innerHTML = '';
-    const sorted = [...PREFECTURES].sort((a, b) => {
-      if (indicator.id === 'change') return b.change - a.change;
-      return b[indicator.id] - a[indicator.id];
-    });
-    for (const q of sorted) {
+    const sorted = [...PREFECTURES].sort(byIndicator);
+    sorted.forEach((q, i) => {
       const li = document.createElement('li');
       li.className = q.id === selectedId ? 'sel' : '';
       const shown = indicator.id === 'pop' ? fmtNum(q.pop, 0) + 'k' : fmtNum(q[indicator.id], indicator.decimals) + indicator.unit;
-      li.innerHTML = `<button type="button"><span>${q.name}</span><b>${shown}</b></button>`;
+      li.innerHTML = `<button type="button"><span class="pref-rank">${i + 1}</span><span class="pref-name">${q.name}</span><b>${shown}</b></button>`;
       li.querySelector('button').addEventListener('click', () => { selectedId = q.id; draw(); });
       list.appendChild(li);
-    }
+    });
     listH.textContent = 'Ranked by ' + indicator.label.toLowerCase();
   }
   draw();

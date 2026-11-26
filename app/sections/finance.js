@@ -7,17 +7,17 @@ import { fmtNum } from '../ui/format.js';
 
 export function renderFinance(root) {
   root.appendChild(kpiStrip([
-    { value: fmtNum(FINANCE.debtToGdp.value, 1) + '%', label: 'Gross debt / GDP', change: 'General government · 2024' },
-    { value: fmtNum(FINANCE.netDebt.value, 1) + '%', label: 'Net debt / GDP', change: 'After government financial assets · 2024' },
-    { value: fmtNum(FINANCE.fiscalBalance.value, 1) + '%', label: 'Fiscal balance / GDP', change: 'General government · 2024' },
-    { value: fmtNum(FINANCE.jgb10y.value, 1) + '%', label: '10-year JGB yield', change: 'December 2024' },
+    { value: fmtNum(FINANCE.debtToGdp.value, 1) + '%', label: 'Gross debt / GDP', change: 'General government · 2025' },
+    { value: fmtNum(FINANCE.netDebt.value, 1) + '%', label: 'Net debt / GDP', change: 'After government financial assets · 2025' },
+    { value: fmtNum(FINANCE.fiscalBalance.value, 1) + '%', label: 'Fiscal balance / GDP', change: 'General government · 2025' },
+    { value: fmtNum(FINANCE.jgb10y.value, 1) + '%', label: '10-year JGB yield', change: 'December 2025' },
   ]));
 
   root.appendChild(chartCard({
-    title: 'General government gross debt, % of GDP, 2015–2024',
+    title: 'General government gross debt, % of GDP, 2015–2025',
     takeaway: 'The world’s highest debt ratio is slowly coming down',
     source: FINANCE.debtToGdp,
-    note: 'IMF Global Debt Database; gross debt, before subtracting government assets',
+    note: 'IMF World Economic Outlook, October 2026; gross debt, before subtracting government assets',
     chart: (slot) => lineChart(slot, {
       labels: DEBT.years, unit: '% of GDP', decimals: 0,
       series: [{ name: 'Gross debt', values: DEBT.values, color: '#2e2a6b' }],
@@ -26,7 +26,7 @@ export function renderFinance(root) {
   }));
 
   root.appendChild(chartCard({
-    title: 'Fiscal balance, % of GDP, 2015–2024',
+    title: 'Fiscal balance, % of GDP, 2015–2025',
     takeaway: 'The deficit narrowed from its pandemic peak of 9% of GDP',
     source: FINANCE.fiscalBalance,
     note: 'General government overall balance, IMF World Economic Outlook',
@@ -41,15 +41,15 @@ export function renderFinance(root) {
 
   const note = document.createElement('p');
   note.className = 'section-note';
-  note.textContent = 'Japan’s fiscal year runs April to March, so budget figures are labelled FY; the ratios above are calendar-year, % of GDP. Gross debt counts everything the government owes; net debt subtracts the financial assets it holds (about ¥1,000 trillion), which is why the two differ by more than 70 points.';
+  note.textContent = 'Japan’s fiscal year runs April to March, so budget figures are labelled FY; the ratios above are calendar-year, % of GDP. Gross debt counts everything the government owes; net debt subtracts the financial assets it holds, which is why the two differ by more than 70 points.';
   root.appendChild(note);
 
   root.appendChild(dataTable({
-    title: 'Debt and balance, 2015–2024',
+    title: 'Debt and balance, 2015–2025',
     source: FINANCE.debtToGdp,
-    filename: 'japan-government-finance-2015-2024.csv',
+    filename: 'japan-government-finance-2015-2025.csv',
     headers: ['Year', 'Gross debt (% of GDP)', 'Fiscal balance (% of GDP)'],
     rows: DEBT.years.map((y, i) => [y, DEBT.values[i], BALANCE.values[i]]),
-    note: 'IMF Global Debt Database and World Economic Outlook',
+    note: 'IMF World Economic Outlook, October 2026',
   }));
 }

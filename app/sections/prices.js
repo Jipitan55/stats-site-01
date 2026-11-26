@@ -9,15 +9,15 @@ import { fmtNum } from '../ui/format.js';
 
 export function renderPrices(root) {
   root.appendChild(kpiStrip([
-    { value: '+' + fmtNum(PRICES.headline.value, 1) + '%', label: 'Consumer prices (all items)', change: 'Year-on-year · 2024' },
-    { value: '+' + fmtNum(PRICES.core.value, 1) + '%', label: 'Core CPI (less fresh food)', change: 'Year-on-year · 2024' },
-    { value: '+' + fmtNum(PRICES.coreCore.value, 1) + '%', label: 'Core-core (less food & energy)', change: 'Year-on-year · 2024' },
+    { value: '+' + fmtNum(PRICES.headline.value, 1) + '%', label: 'Consumer prices (all items)', change: 'Year-on-year · 2025' },
+    { value: '+' + fmtNum(PRICES.core.value, 1) + '%', label: 'Core CPI (less fresh food)', change: 'Year-on-year · 2025' },
+    { value: '+' + fmtNum(PRICES.coreCore.value, 1) + '%', label: 'Core-core (less food & energy)', change: 'Year-on-year · 2025' },
     { value: fmtNum(PRICES.bojTarget.value, 1) + '%', label: 'Bank of Japan target', change: 'Price stability target since 2013' },
   ]));
 
   const cpiCard = chartCard({
-    title: 'Consumer price inflation, 2015–2024',
-    takeaway: 'Inflation stayed above the 2% target for a third year',
+    title: 'Consumer price inflation, 2015–2025',
+    takeaway: 'Inflation stayed above the 2% target for a fourth straight year',
     source: PRICES.headline,
     note: 'Consumer Price Index, 2020 base, annual average',
   });
@@ -39,7 +39,7 @@ export function renderPrices(root) {
     lineChart(cpiSlot, {
       labels: CPI.years, unit: '%', decimals: 1, series,
       reference: { value: 2.0, label: 'BOJ target 2%' },
-      ariaLabel: 'Line chart of consumer price inflation, 2015 to 2024',
+      ariaLabel: 'Line chart of consumer price inflation, 2015 to 2025',
     });
     segmented(cpiControls, [
       { value: 'headline', label: 'Headline' },
@@ -56,9 +56,9 @@ export function renderPrices(root) {
   root.appendChild(note);
 
   root.appendChild(dataTable({
-    title: 'Consumer prices, 2015–2024',
+    title: 'Consumer prices, 2015–2025',
     source: PRICES.headline,
-    filename: 'japan-cpi-2015-2024.csv',
+    filename: 'japan-cpi-2015-2025.csv',
     headers: ['Year', 'All items (%)', 'Core — less fresh food (%)', 'Core-core — less food & energy (%)'],
     rows: CPI.years.map((y, i) => [y, CPI.headline[i], CPI.core[i], CPI.coreCore[i]]),
     note: 'Year-on-year %, annual average, 2020 base',

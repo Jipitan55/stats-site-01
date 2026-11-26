@@ -1,11 +1,15 @@
 // Line chart, hand-drawn SVG. Supports several series, a dashed reference
-// line (e.g. the Bank of Japan's 2% target), and dots on hover points.
+// line (e.g. the Bank of Japan's 2% target), dots on hover points, a legend
+// for multi-series charts, and a y-axis unit label. On a phone-width
+// viewport the chart draws narrower with every other year labelled, so the
+// axis text stays at least 11px.
 import { svgEl, textEl, ticks, bindTip } from './svg.js';
 import { fmtNum } from '../ui/format.js';
 
 export function lineChart(container, opts) {
-  const { labels, series, unit, decimals, reference, ariaLabel, yLabel } = opts;
-  const W = 720, H = 300, L = 54, R = 14, T = 16, B = 30;
+  const { labels, series, unit, decimals, reference, ariaLabel, yLabel, yAxisLabel } = opts;
+  const narrow = typeof window !== 'undefined' && window.innerWidth < 560;
+  const W = narrow ? 400 : 720, H = 300, L = 54, R = 14, T = 16, B = 30;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`, width: '100%', role: 'img',
     'aria-label': ariaLabel || 'Line chart',
@@ -18,8 +22,13 @@ export function lineChart(container, opts) {
   const y = (v) => T + ((hi - v) / (hi - lo)) * (H - T - B);
   const x = (i) => L + (i / (labels.length - 1)) * (W - L - R);
   for (const tv of ticks(lo, hi, 4)) {
-    svgEl('line', { x1: L, x2: W - R, y1: y(tv), y2: y(tv), class: 'grid' }, svg);
+    // The zero line, where the range includes one, is drawn darker so the
+    // baseline is identifiable.
+    svgEl('line', { x1: L, x2: W - R, y1: y(tv), y2: y(tv), class: tv === 0 ? 'axis-line' : 'grid' }, svg);
     textEl(svg, L - 8, y(tv) + 4, fmtNum(tv, decimals) + (yLabel || ''), { class: 'axis', 'text-anchor': 'end' });
+  }
+  if (yAxisLabel) {
+    textEl(svg, L, T - 4, yAxisLabel, { class: 'axis strong', 'text-anchor': 'start' });
   }
   if (reference) {
     svgEl('line', { x1: L, x2: W - R, y1: y(reference.value), y2: y(reference.value), class: 'refline' }, svg);
@@ -41,7 +50,29 @@ export function lineChart(container, opts) {
     });
   });
   labels.forEach((lab, i) => {
+    if (narrow && i % 2 === 1) return;
     textEl(svg, x(i), H - 8, String(lab), { class: 'axis', 'text-anchor': 'middle' });
   });
+  if (series.length > 1) {
+    const leg = document.createElement('div');
+    leg.className = 'chart-legend';
+    leg.setAttribute('role', 'list');
+    for (const s of series) {
+      const item = document.createElement('span');
+      item.className = 'chart-legend-item';
+      const sw = document.createElement('i');
+      if (s.dash) {
+        sw.style.background = 'none';
+        sw.style.borderTop = '3px dashed ' + (s.color || 'var(--indigo)');
+        sw.style.height = '0';
+      } else {
+        sw.style.background = s.color || 'var(--indigo)';
+      }
+      item.appendChild(sw);
+      item.appendChild(document.createTextNode(s.name));
+      leg.appendChild(item);
+    }
+    container.appendChild(leg);
+  }
   return svg;
 }

@@ -10,7 +10,7 @@ const SCALE = ['#efeef7', '#d9d6ee', '#b3aede', '#8a83c9', '#6158b3', '#413a93',
 export function tileMap(container, opts) {
   const { prefectures, indicator, selectedId, onSelect } = opts;
   container.innerHTML = '';
-  const cols = 13, rows = 13;
+  const cols = 12, rows = 13;
   const TW = 58, TH = 46, GAP = 4, W = cols * (TW + GAP) + GAP, H = rows * (TH + GAP) + GAP;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`, width: '100%', role: 'img',

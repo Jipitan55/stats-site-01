@@ -16,9 +16,9 @@ export const SECTIONS = [
 const SECTION_TITLES = {
   overview: 'Overview — Japan at a glance',
   population: 'Population — fewer, older, more diverse',
-  economy: 'Economy — the world’s fourth-largest, barely growing',
+  economy: 'Economy — the world’s fourth-largest, growing again',
   labour: 'Labour — pay is rising, purchasing power is not',
-  prices: 'Prices — inflation above target for a third year',
+  prices: 'Prices — inflation above target for a fourth year',
   finance: 'Government finance — the world’s biggest debt pile',
   prefectures: 'Prefectures — two grew, 45 shrank',
   sources: 'Sources & methods',

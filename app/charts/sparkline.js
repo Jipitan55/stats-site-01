@@ -20,7 +20,7 @@ export function sparkline(container, values, up) {
   const last = values[values.length - 1];
   svgEl('circle', {
     cx: x(values.length - 1), cy: y(last), r: 3.2,
-    fill: 'var(--vermilion)',
+    fill: up === false ? 'var(--vermilion)' : 'var(--indigo)',
   }, svg);
   return svg;
 }

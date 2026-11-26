@@ -20,6 +20,11 @@ export const MALE_SHARE = [
 // Each year's bands sum exactly to the published total, and the 0–14 /
 // 15–64 / 65+ bands match the published shares (1950: 35.4 / 59.6 / 5.0;
 // 1990: 18.2 / 69.7 / 12.0; 2024: 11.2 / 59.5 / 29.3; 2050: 10.4 / 52.3 / 37.3).
+// The pyramid stays on 2024: the 2025 census final (1 Oct 2025, 122,972,528)
+// is used for the headline figures, but the e-Stat 5-year age table read on
+// 26 Nov 2026 returned bands summing to 87.7m — inconsistent with the
+// published census total — so no verified 2025 bands exist yet and the
+// verified 2024 pyramid is kept, clearly labelled.
 export const PYRAMID = {
   1950: {
     groups: [10800, 10100, 8553, 7900, 6800, 6200, 5400, 5200, 4800, 4200, 3600, 3000, 2487, 1800, 1200, 700, 310, 150],
@@ -42,42 +47,46 @@ export const PYRAMID = {
 export const PYRAMID_YEARS = [1950, 1990, 2024, 2050];
 
 export const POPULATION = {
-  total: fig(123.802, 'million people', '1 Oct 2024', 'popEst', 'Total population, incl. foreign residents'),
-  japaneseOnly: fig(120.296, 'million people', '1 Oct 2024', 'popEst', 'Japanese nationals only'),
-  change: fig(-0.55, 'million people', '2023 → 2024', 'popEst', '14th consecutive annual fall'),
-  aged65Share: fig(29.3, '% of population', '1 Oct 2024', 'popEst'),
-  workingAgeShare: fig(59.5, '% of population', '1 Oct 2024', 'popEst'),
-  childShare: fig(11.2, '% of population', '1 Oct 2024', 'popEst'),
-  foreignResidents: fig(3.769, 'million people', '31 Dec 2024', 'isa', '+10.5% on a year earlier — a record high'),
+  total: fig(122.973, 'million people', '1 Oct 2025, census', 'census', 'Total population, incl. foreign residents'),
+  japaneseOnly: fig(119.132, 'million people', '1 Oct 2025, census', 'census', 'Japanese nationals only'),
+  change: fig(-3.17, 'million people', '2020 → 2025', 'census', '15th consecutive annual fall'),
+  aged65Share: fig(29.4, '% of population', '1 Oct 2025', 'census'),
+  workingAgeShare: fig(59.7, '% of population', '1 Oct 2025', 'census'),
+  childShare: fig(10.9, '% of population', '1 Oct 2025', 'census'),
+  foreignResidents: fig(4.125, 'million people', '31 Dec 2025', 'isa', '+9.5% on a year earlier — first time above 4 million'),
   lifeMale: fig(81.09, 'years', '2024', 'vital'),
   lifeFemale: fig(87.13, 'years', '2024', 'vital'),
 };
 
 // Births and deaths: Japanese nationals in Japan, final Vital Statistics.
+// 2024 figures are the final data (births 686,173; deaths 1,605,378);
+// 2025 is the final data published 30 September 2026.
 export const VITAL = {
-  years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
-  births: [1005677, 977242, 946065, 918400, 865239, 840835, 811622, 770759, 727288, 686061],
-  deaths: [1290444, 1307748, 1340567, 1362470, 1381093, 1372755, 1439809, 1569050, 1576016, 1605298],
-  birthsFig: fig(686061, 'babies', '2024', 'vital', 'First year below 700,000 since records began in 1899'),
-  deathsFig: fig(1605298, 'people', '2024', 'vital', 'Highest number in the postwar period'),
-  naturalChange: fig(-919237, 'people', '2024', 'vital', 'Deaths minus births; 18th straight year of natural decline'),
+  years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  births: [1005677, 977242, 946065, 918400, 865239, 840835, 811622, 770759, 727288, 686173, 671236],
+  deaths: [1290444, 1307748, 1340567, 1362470, 1381093, 1372755, 1439809, 1569050, 1576016, 1605378, 1589489],
+  birthsFig: fig(671236, 'babies', '2025', 'vital', 'Lowest since records began in 1899'),
+  deathsFig: fig(1589489, 'people', '2025', 'vital', 'First annual fall since 2020'),
+  naturalChange: fig(-918253, 'people', '2025', 'vital', 'Deaths minus births; 19th straight year of natural decline'),
 };
 
 export const TFR = {
-  years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
-  values: [1.45, 1.44, 1.43, 1.42, 1.36, 1.33, 1.30, 1.26, 1.20, 1.15],
-  fig: fig(1.15, 'children per woman', '2024', 'vital', 'Record low; 9th consecutive annual fall'),
+  years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  values: [1.45, 1.44, 1.43, 1.42, 1.36, 1.33, 1.30, 1.26, 1.20, 1.15, 1.14],
+  fig: fig(1.14, 'children per woman', '2025', 'vital', 'Record low; 10th consecutive annual fall'),
 };
 
-// Foreign residents by nationality, end of 2024.
+// Foreign residents by nationality, end of 2025. The chart shows eight
+// categories; "Other" folds in Myanmar, Sri Lanka, Taiwan and the remaining
+// nationalities (637,921 + 182,567 + 79,128 + 73,256 = 972,872).
 export const FOREIGN_BY_COUNTRY = [
-  { name: 'China', value: 873286 },
-  { name: 'Viet Nam', value: 634361 },
-  { name: 'South Korea', value: 409238 },
-  { name: 'Philippines', value: 341518 },
-  { name: 'Brazil', value: 208886 },
-  { name: 'Nepal', value: 206898 },
-  { name: 'Indonesia', value: 173763 },
-  { name: 'Other', value: 921027 },
+  { name: 'China', value: 930428 },
+  { name: 'Viet Nam', value: 681100 },
+  { name: 'South Korea', value: 407341 },
+  { name: 'Philippines', value: 356579 },
+  { name: 'Nepal', value: 300992 },
+  { name: 'Indonesia', value: 266069 },
+  { name: 'Brazil', value: 210014 },
+  { name: 'Other', value: 972872 },
 ];
-export const FOREIGN_TOTAL_FIG = fig(3768977, 'people', '31 Dec 2024', 'isa');
+export const FOREIGN_TOTAL_FIG = fig(4125395, 'people', '31 Dec 2025', 'isa');
